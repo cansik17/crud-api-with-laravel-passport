@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -51,6 +52,25 @@ class AuthController extends Controller
                 "type" => "error",
                 "message" => "The data you have entered is incorrect.",
             ], 401);
+        }
+
+    }
+    public function logout()
+    {
+        $user_id = auth("api")->user()->id;
+
+        $delete = DB::table("oauth_access_tokens")->where("user_id",$user_id)->delete();
+
+        if ($delete) {
+            return response()->json([
+                "type" => "success",
+                "message" => "Logout successfull.",
+            ], 200);
+        }else {
+            return response()->json([
+                "type" => "error",
+                "message" => "Unexpected Error.",
+            ], 500);
         }
 
     }

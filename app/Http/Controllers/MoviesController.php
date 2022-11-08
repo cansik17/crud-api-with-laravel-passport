@@ -31,6 +31,7 @@ class MoviesController extends Controller
      */
     public function store(Request $request)
     {
+        
         $formFields = $request->validate([
             "name" => ["required", "min:3"],
             "year" => ["nullable", "min:3"],
@@ -85,6 +86,7 @@ class MoviesController extends Controller
     public function update(Request $request, $id)
     {
 
+
         $item = Movies::where("id", $id)->first();
 
         if (empty($item)) {
@@ -94,12 +96,11 @@ class MoviesController extends Controller
             ], 404); 
         }
 
-        //json_encode($request); exit;
 
         $formFields = $request->validate([
             "name" => ["required", "min:3"],
             "year" => ["nullable", "min:3"],
-            "rate" => ["required", "integer", "beetween:1,10"],
+            "rate" => ["required", "integer", "between:1,10"],
         ]);
 
         // Hash Password

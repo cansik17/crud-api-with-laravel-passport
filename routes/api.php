@@ -16,12 +16,11 @@ use App\Http\Controllers\MoviesController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+Route::post('logout', [AuthController::class, 'logout'])->middleware("auth:api");
 
 Route::get('movies', [MoviesController::class, 'index'])->middleware("auth:api");
 Route::post('movies', [MoviesController::class, 'store'])->middleware("auth:api");
